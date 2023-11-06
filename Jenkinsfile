@@ -3,10 +3,7 @@ pipeline {
     tools{
         maven 'MAVEN_HOME'
     }
-    stage('Initialize'){
-            def dockerHome = tool 'docker_dir'
-            env.PATH = "${dockerHome}/bin:${env.PATH}"
-        }
+
     stages{
         stage('Build Maven'){
             steps{
@@ -14,6 +11,10 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        stage('Initialize'){
+                    def dockerHome = tool 'docker_dir'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                }
         stage('Build docker image'){
             steps{
                 script{
