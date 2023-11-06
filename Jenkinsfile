@@ -1,35 +1,37 @@
 pipeline {
     agent any
-    tools{
+    tools {
         maven 'MAVEN_HOME'
     }
-
-    stages{
-        stage('Build Maven'){
-            steps{
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/sinugaud/project-automation']])
+    stages {
+        stage('Build Maven') {
+            steps {
+                checkout scm
                 sh 'mvn clean install'
             }
         }
-        stage('Initialize'){
-                    def dockerHome = tool 'docker_dir'
+        stage('Initialize') {
+            steps {
+                script {
+                    def dockerHome = tool name: 'docker_dir', type: 'Tool'
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
                 }
-        stage('Build docker image'){
-            steps{
-                script{
+            }
+        }
+        stage('Build docker image') {
+            steps {
+                script {
                     sh 'docker build -t sinugaud/web-automate .'
                 }
             }
         }
-        stage('Push image to Hub'){
-            steps{
-                script{
-                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                   sh 'docker login -u sinugaud -p ${dockerhubpwd}'
-
-}
-                   sh 'docker push sinugaud/devops-integration'
+        stage('Push image to Hub') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                        sh "docker login -u sinugaud -p ${dockerhubpwd}"
+                        sh 'docker push sinugaud/web-automate'
+                    }
                 }
             }
         }
