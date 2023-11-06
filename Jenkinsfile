@@ -10,14 +10,6 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('Initialize') {
-            steps {
-                script {
-                    def dockerHome = tool name: 'docker_dir', type: 'Tool'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-            }
-        }
         stage('Build docker image') {
             steps {
                 script {
