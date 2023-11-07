@@ -7,13 +7,13 @@ pipeline {
         stage('Build Maven') {
             steps {
                 checkout scm
-                bat 'mvn clean install'
+                sh 'mvn clean install'
             }
         }
         stage('Build docker image') {
             steps {
                 script {
-                    bat 'docker build -t sinugaud/web-automate .'
+                    sh 'docker build -t sinugaud/web-automate .'
                 }
             }
         }
@@ -21,8 +21,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                        bat "docker login -u sinugaud -p ${dockerhubpwd}"
-                        bat 'docker push sinugaud/web-automate'
+                        sh "docker login -u sinugaud -p ${dockerhubpwd}"
+                        sh 'docker push sinugaud/web-automate'
                     }
                 }
             }
