@@ -10,4 +10,11 @@ public class MainController {
     {
         return  "msg welcome";
     }
+
+    @GetMapping("/message")
+    public String me()
+    {
+        return  "message";
+    }
+
 }
