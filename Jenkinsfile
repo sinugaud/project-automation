@@ -20,8 +20,9 @@ pipeline {
         stage('Push image to Hub') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                        sh "sudo docker login -u sinugaud -p ${dockerhubpwd}"
+
+                    withCredentials([string(credentialsId: 'dockerhub-pw', variable: 'dockerhubpwd')]) {
+                        sh "docker login -u sinugaud -p ${dockerhubpwd}"
                         sh 'docker push sinugaud/web-automate'
                     }
                 }
