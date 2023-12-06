@@ -15,7 +15,6 @@ public class MainController {
     public String me()
     {
 
-        //adding comment
         return  "message";
     }
 
