@@ -30,7 +30,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh 'docker run -d -p 8086:8086 sinugaud/web-automate'
+                    sh 'docker run -d -p 8088:8088 sinugaud/web-automate'
                 }
             }
         }
