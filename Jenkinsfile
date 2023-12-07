@@ -30,8 +30,11 @@ pipeline {
         stage('Deploy to k8s') {
             steps {
                 script {
-                 def kubeconfig = readFile 'spring-kube-deployment.yaml'  // Read kubeconfig if necessary
+
+                            kubeconfig(credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443') {
                              sh "kubectl apply -f spring-kube-deployment.yaml --kubeconfig=${kubeconfig}"
+
+                            }
 
 
                     }
@@ -39,4 +42,4 @@ pipeline {
             }
         }
     }
-}
+
