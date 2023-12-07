@@ -15,6 +15,7 @@ spec:
       containers:
         - name: spring-web-automate
           image: sinugaud/web-automate:latest
+          ports:
             - containerPort: 8088
 
 ---
