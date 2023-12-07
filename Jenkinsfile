@@ -22,7 +22,7 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'dockerhub-pw', variable: 'dockerhubpwd')]) {
 
-                         sudo chmod 666 /var/run/docker.sock
+                         sh 'sudo chmod 666 /var/run/docker.sock'
                         sh "docker login -u sinugaud -p ${dockerhubpwd}"
                         sh 'docker push sinugaud/web-automate'
                     }
