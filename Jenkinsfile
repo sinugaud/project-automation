@@ -31,15 +31,14 @@ pipeline {
             steps {
                 script {
 
-                        //    kubeconfig(credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443') {
+                        //    kubeconfig(credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443')
                          //    sh "kubectl apply -f spring-kube-deployment.yaml --kubeconfig=${kubeconfig}"
 
-                    def config = credentials('config') // Assuming 'config' is a valid credential ID
+                         kubeconfig(credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443') {
+                         sh "kubectl apply -f spring-kube-deployment.yaml
+                         }
 
-                    withKubeConfig([credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443']) {
-                        sh "kubectl apply -f spring-kube-deployment.yaml"
 
-                            }
 
 
                     }
