@@ -30,17 +30,9 @@ pipeline {
         stage('Deploy to k8s') {
             steps {
                 script {
-
-                        //    kubeconfig(credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443')
-                         //    sh "kubectl apply -f spring-kube-deployment.yaml --kubeconfig=${kubeconfig}"
-
                          kubeconfig(credentialsId: 'config', serverUrl: 'https://192.168.49.2:8443') {
                          sh "kubectl apply -f spring-kube-deployment.yaml"
                          }
-
-
-
-
                     }
                 }
             }
