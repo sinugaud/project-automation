@@ -27,12 +27,12 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to k8s'){
-                    steps{
-                        script{
-                            kubernetesDeploy (configs: 'spring-kube-deployment.yaml')
-                        }
-                    }
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    sh 'docker run -d -p 8088:8088 sinugaud/web-automate'
                 }
+            }
+        }
     }
 }

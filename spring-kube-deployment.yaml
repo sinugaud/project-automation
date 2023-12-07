@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-kube-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spring-web-automate
+  template:
+    metadata:
+      labels:
+        app: spring-web-automate
+    spec:
+      containers:
+        - name: spring-web-automate
+          image: sinugaud/web-automate:latest
+            - containerPort: 8088
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-web-automate-service
+spec:
+  selector:
+    app: spring-web-automate
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8088
